@@ -1,4 +1,4 @@
-package ru.yandex.practicum.PageObjectModel;
+package ru.yandex.practicum.pageobject;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -65,6 +65,9 @@ public class SamokatPageObject {
     private final By yesButtonSelector = By.xpath("//button[text()='Да']");
     //селектор кнопки ДА, подтверждающий создание заказа
 
+    private final By orderConfirmPopUp = By.xpath("//div[text()='Заказ оформлен']");
+    //селектор всплывающего окна с подтверждением создания заказа
+
     /*======================================================================================================================
                     Селекторы узлов блока FAQ главной страницы Яндекс Самокат */
 
@@ -82,6 +85,7 @@ public class SamokatPageObject {
 
 /*===========================================================================================================================
                                      Методы создания заказа */
+
     public void clickHeaderOrderButton() {      //Метод нажатия на кнопку Заказать в верхней части страницы СДЕЛАТЬ ЛОКАТОР
         WebElement headerOrderButton = driver.findElement(headerOrderButtonSelector);
         headerOrderButton.click();
@@ -100,39 +104,38 @@ public class SamokatPageObject {
 
     }
 
-
-    public void fillingNameField(String name) {     //метод заполнения поля Имя формы создания заказа
+    public void fillNameField(String name) {     //метод заполнения поля Имя формы создания заказа
         WebElement nameInputOrderPage = driver.findElement(nameFieldOrderSelector);
         nameInputOrderPage.sendKeys(name);
     }
 
-    public void fillingLastNameField(String lastName) {     //метод заполнения поля Фамилия формы создания заказа
+    public void fillLastNameField(String lastName) {     //метод заполнения поля Фамилия формы создания заказа
         WebElement lastNameInputOrderPage = driver.findElement(lastNameFieldOrderSelector);
         lastNameInputOrderPage.sendKeys(lastName);
     }
 
-    public void fillingAddressField(String address) {       //метод заполнения поля Адресс формы создания заказа
+    public void fillAddressField(String address) {       //метод заполнения поля Адресс формы создания заказа
         WebElement addressInputOrderPage = driver.findElement(addressFieldOrderSelector);
         addressInputOrderPage.sendKeys(address);
     }
 
-    public void fillingMetroField(String stationName) {     //метод заполнения поля Станция Метро формы создания заказа
+    public void fillMetroField(String stationName) {     //метод заполнения поля Станция Метро формы создания заказа
         WebElement metroInputOrderPage = driver.findElement(metroFieldOrderSelector);
         metroInputOrderPage.click();
         metroInputOrderPage.sendKeys(stationName, Keys.DOWN, Keys.ENTER);
     }
 
-    public void fillingPhoneField(String phone) {       //метод заполнения поля Телефон формы создания заказа
+    public void fillPhoneField(String phone) {       //метод заполнения поля Телефон формы создания заказа
         WebElement phoneInputOrderPage = driver.findElement(phoneFieldOrderSelector);
         phoneInputOrderPage.sendKeys(phone);
     }
 
-    public void nextButtonClicking() {      //метод нажатия на кнопку Далее для перехода на второй блок полей создания заказа
+    public void nextButtonClick() {      //метод нажатия на кнопку Далее для перехода на второй блок полей создания заказа
         WebElement nextButton = driver.findElement(nextButtonOrderSelector);
         nextButton.click();
     }
 
-    public void fillingDateField(String date) {     //метод заполнения поля Дата доставки формы создания заказа
+    public void fillDateField(String date) {     //метод заполнения поля Дата доставки формы создания заказа
 
         WebElement dateOfDelivery = driver.findElement(dateFieldOrderSelector);
 
@@ -143,7 +146,7 @@ public class SamokatPageObject {
 
     }
 
-    public void fillingRentTimeField(String daysOfRent) {       //метод заполнения псевдополя Количество дней аренды формы создания заказа
+    public void fillRentTimeField(String daysOfRent) {       //метод заполнения псевдополя Количество дней аренды формы создания заказа
 
         WebElement rentTime = driver.findElement(rentFieldOrderSelector);
         rentTime.click();
@@ -156,14 +159,14 @@ public class SamokatPageObject {
 
     }
 
-    public void totalOrderButtonClicking() {        //метод нажатия на кнопку Заказать завершения создания заказа
+    public void totalOrderButtonClick() {        //метод нажатия на кнопку Заказать завершения создания заказа
 
         WebElement totalOrderButton = driver.findElement(totalOrderButtonSelector);
         totalOrderButton.click();
 
     }
 
-    public void orderCreatingCompleteStep() {       //метод нажатя на кнопку ДА для финального подтверждения заказа во всплывающем окне
+    public void orderCreateCompleteStep() {       //метод нажатия на кнопку ДА для финального подтверждения заказа во всплывающем окне
 
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(conformationOrderCreationSelector));
@@ -173,9 +176,16 @@ public class SamokatPageObject {
 
     }
 
+    public boolean isCreatedNewOrder(){     //метод проверки наличия всплывающего окна с подтверждением создания заказа
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOfElementLocated(orderConfirmPopUp));
+
+        return driver.findElement(orderConfirmPopUp).isDisplayed();
+    }
 
 /*============================================================================================================================
                                      Методы проверки блока FAQ */
+
     public void cookieAccept(){        // Метод закрытия блока информирования об использовании куки
         WebElement cookieButton = driver.findElement(cookieAcceptButtonSelector);
         cookieButton.click();
@@ -197,7 +207,6 @@ public class SamokatPageObject {
         WebElement answer = driver.findElement(By.xpath(String.format(answerTemplate, index)));
         return answer.getText();
     }
-
 
  /*========================================================================================================================*/
 

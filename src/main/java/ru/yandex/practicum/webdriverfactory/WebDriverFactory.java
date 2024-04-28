@@ -1,4 +1,4 @@
-package ru.yandex.practicum.WebDriverFactory;
+package ru.yandex.practicum.webdriverfactory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

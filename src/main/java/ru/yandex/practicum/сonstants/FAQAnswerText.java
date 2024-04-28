@@ -1,4 +1,4 @@
-package ru.yandex.practicum.Constants;
+package ru.yandex.practicum.сonstants;
 
 public class FAQAnswerText {
 
